@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Allow user zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VCE Media Folio Resource</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* GLOBAL STYLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    @font-face {
+      font-family: 'VIC';
+      src: url('/OTF/VIC-Regular.woff2') format('woff2'),
+           url('/OTF/VIC-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'VIC';
+      src: url('/OTF/VIC-Bold.woff2') format('woff2'),
+           url('/OTF/VIC-Bold.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'VIC';
+      src: url('/OTF/VIC-Italic.woff2') format('woff2'),
+           url('/OTF/VIC-Italic.woff') format('woff');
+      font-weight: normal;
+      font-style: italic;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+    body {
+      font-family: 'VIC';
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+    
+    /* BLUE BANNER HEADER */
+    header.blue-banner {
+      width: 100%;
+      background: #004ea8;
+      color: #fff;
+      font-family: VIC;
+      text-align: center;
+      padding: 60px 0;
+      margin-bottom: 20px;
+    }
+    header.blue-banner h1 {
+      font-size: 2.5em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+    h2 {
+      color: #004ea8;
+      font-weight: bold;
+      font-size: 2em;
+    }
+    
+    /* DESKTOP SIDE NAVIGATION (Left) */
+    .side-nav {
+      position: fixed;
+      top: calc(80px + 10rem); /* Adjust based on banner height */
+      left: 20px;
+      background: #f7f7f7;
+  padding: 10px 15px;
+  width: 20%;
+  text-align: left;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px); /* Prevent overflow */
+    }
+    .side-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .side-nav li {
+      margin: 10px 0;
+    }
+    .side-nav a {
+      color: #000;
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.3s ease;
+      padding: 4px 8px;
+      display: block;
+    }
+    .side-nav a:hover {
+      color: #555;
+    }
+    .side-nav li.active a {
+      border-left: 4px solid #000;
+      background: #f0f0f0;
+    }
+    
+    /* RIGHT-HAND COLUMN (Resources) */
+    .right-col {
+      /* Desktop: fixed on right */
+      position: fixed;
+      top: 35%;
+      right: 20px;
+      transform: translateY(-50%);
+      background: #318DC2;
+      border-radius: 8px;
+      z-index: 1000;
+      width: 15%;
+      text-align: left;
+      padding: 10px 15px;
+    }
+    .right-col h3 {
+      font-size: 1.2em;
+      color: white;
+      margin-bottom: 10px;
+    }
+    .right-col ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .right-col li {
+      margin-bottom: 8px;
+    }
+    .right-col a {
+      text-decoration: none;
+      color: #ffffff;
+      transition: color 0.3s ease;
+    }
+    .right-col a:hover {
+      color: #ddd;
+    }
+    /* Hide right-col on mobile */
+    @media (max-width: 768px) {
+      .right-col { display: none; }
+    }
+    
+    /* MAIN CONTENT & CENTERED CHANNEL */
+    main {
+      margin: 40px 20px;
+      padding-left: 260px; /* leaves room for left nav */
+    }
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    section {
+      margin-bottom: 120px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid #eee;
+    }
+    section h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #ffffff;
+      text-align: left;
+      letter-spacing: 1px;
+    }
+    section h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #004ea8;
+      text-align: left;
+      letter-spacing: 1px;
+    }
+    section h3 {
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      color: #004ea8;
+      text-align: left;
+      letter-spacing: 1px;
+    }
+    
+    /* TEXT & IMAGE SECTIONS */
+    .crit-section p {
+      margin-bottom: 15px;
+    }
+    .crit-section img,
+    .image-section img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+    }
+    
+    /* VIDEO SECTION */
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      margin: 0 auto;
+      background: #000;
+    }
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* GALLERY WRAPPER & GALLERY */
+    .gallery {
+      position: relative;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 10px;
+      padding: 0 10px 20px 10px; /* extra bottom padding for scrollbar */
+      height: 400px;
+      box-shadow: inset -50px 0 50px -20px rgbq(255,255,255,0.8);
+    }
+    /* Adjust images so they don't extend into the padded area */
+    .gallery img {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      width: 100%;
+      max-height: calc(100% - 20px);
+      object-fit: contain;
+      cursor: pointer;
+      border: 2px solid #000;
+      transition: transform 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .gallery img:hover {
+      transform: scale(1.03);
+    }
+    /* Gradient overlay fixed in place */
+    .gallery-gradient {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @media (min-width: 769px) {
+      .gallery {
+        margin: 0 auto;
+        max-width: 800px;
+      }
+      .gallery img {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 600px;
+        max-height: calc(100% - 20px);
+      }
+    }
+    
+    /* MODAL FOR GALLERY IMAGES */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      flex-direction: column;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border: 5px solid #fff;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      transform: scale(1);
+      transform-origin: center center;
+      cursor: pointer;
+    }
+    /* Toggle zoom on modal image when clicked */
+    .modal img.zoomed {
+      transform: scale(1.5);
+    }
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2em;
+      color: #fff;
+      cursor: pointer;
+    }
+    .modal .nav-arrow {
+      position: absolute;
+      top: 50%;
+      font-size: 3em;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px;
+      transition: opacity 0.3s ease;
+      opacity: 0.7;
+    }
+    .modal .nav-arrow:hover {
+      opacity: 1;
+    }
+    .modal .nav-arrow.left {
+      left: 20px;
+    }
+    .modal .nav-arrow.right {
+      right: 20px;
+    }
+    .modal-caption {
+      margin-top: 10px;
+      color: #fff;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    
+    /* MOBILE NAVIGATION: Show mobile nav on mobile only */
+    .mobile-nav {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .side-nav {
+        display: none;
+      }
+      main {
+        margin: 80px 20px 20px 20px;
+        padding-left: 20px;
+      }
+      .mobile-nav {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: rgba(255,255,255,0.95);
+        border-bottom: 1px solid #ccc;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        z-index: 1000;
+      }
+      .mobile-nav-btn {
+        background: none;
+        border: none;
+        color: #000;
+        font-size: 1.8em;
+        padding: 5px;
+        cursor: pointer;
+      }
+      .mobile-nav-chapter {
+        font-size: 1em;
+        text-align: left;
+        flex-grow: 1;
+      }
+    }
+    @media (min-width: 769px) {
+      .mobile-nav { display: none !important; }
+    }
+    
+    /* MOBILE: Place right-col below main content */
+    @media (max-width: 768px) {
+      .right-col {
+        position: static;
+        transform: none;
+        width: auto;
+        margin: 20px 0;
+        padding: 10px;
+      }
+    }
+    
+    /* OPTIONAL: Custom scrollbar styling */
+    ::-webkit-scrollbar {
+      height: 12px;
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #888 #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Blue Banner Header -->
+  <header class="blue-banner">
+    <h1>VCE Media Folio Resource</h1>
+  </header>
+  
+  <!-- Desktop Side Navigation (Left) -->
+  <nav class="side-nav">
+    <h3>Contents</h3>
+    <br><ul id="nav-list">
+      <li><a href="#part1" class="nav-section"><h4>Part One: Portfolio structure and research</h4></a></li>
+      <li><a href="#video-section">Video: The filmmakers discuss portfolio structure and research</a></li>
+      <li><a href="#crit1">Assessment Criterion 1</a></li>
+      <li><a href="#gallery-section">Folio samples</a></li>
+      <li><a href="#quiz-section">Quizz</a></li>
+      <li><a href="#video-section2">Video: Folio advice</a></li>
+      <br>
+      <li><a href="#part2" class="nav-section"><h4>Part Two: Pre-production planning and experimentation</h4></a></li>
+      <li><a href="#video-section3">Video: The filmmakers discuss production experimentation</a></li>
+      <li><a href="#crit2">Assessment Criterion 2</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Mobile Navigation (visible only on mobile) -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="mobile-nav-btn" id="mobile-prev">&#9650;</button>
+    <div class="mobile-nav-chapter" id="mobile-chapter">Chapter: —</div>
+    <button class="mobile-nav-btn" id="mobile-next">&#9660;</button>
+  </div>
+  
+  <!-- Main Content -->
+  <main>
+  <!-- Part one intro -->
+    <div class="content">
+      <section id="part1"><h2> Part One: Research</h2><p>In this section we will explore Unit 3 Area of Study 2 Research, development and experimentation.
+        <br><br><i>How are ideas, research, investigation and experimentation used in the development of media products?</i>
+        <br><br>Refer to page 28 of the VCE Media Study Design for more information</p></section>
+      </section>
+        <!-- Video Section -->
+      <section id="video-section">
+        <!-- H1 removed because it's in the blue banner header -->
+        <h3>Video: The filmmakers discuss portfolio structure and research</h3>
+        <p style="text-align: left;">Ethan, Georgie and Brinners introduce their VCE Media films and discuss their portfolio structure and research. <br><br><i>What will inspire you to make your film?</i><br><br></p>
+        <div class="video-container">
+          <video controls>
+            <source src="https://player.vimeo.com/progressive_redirect/playback/1055822737/rendition/720p/file.mp4?loc=external&log_user=0&signature=04bf7ac24f12389b99a83ddf53580fb3dc20aca94e018c54adabff80bedd505f" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+              </section>
+      
+      <!-- Criteria 1 Section -->
+      <section id="crit1" class="crit-section">
+        <h3>Relevant assessment criteria</h3>
+        <p>
+          Ethan and Georgie discussed the research behind the creation of their films. They also discussed how they documented this research in their portfolios. Let's look at the VCE Media: Administrative information for School-based Assessment in 2025.
+        </p>
+        <img src="crit1.png" alt="Sample Image">
+        <p>Below, you can explore the relevant pages from the three students' portfolios. Sample annotations link to the Indicators from the SAT Assessment sheet.</p>
+      </section>
+      
+      <!-- Gallery Section 1 -->
+      <section id="gallery-section">
+        <h3>Folio samples<br><br>The Flames within: Pages 1-4, Research</h3>
+        <div class="gallery-wrapper">
+          <div class="gallery">
+            <img src="page1.jpg" alt="Page 1" data-caption="Page 1. Ethan researches Saltburn's style through its cinematographic codes and conventions of composition and aspect ratio">
+            <img src="page2.jpg" alt="Page 2" data-caption="Page 2. Ethan researches the code of colour and its symbolic properties.">
+            <img src="page3.jpg" alt="Page 3" data-caption="Page 3. Ethan researches the cinematographic convention of composition.">
+            <img src="page4.jpg" alt="Page 4" data-caption="Page 4. Screenshots from Saltburn">
+          </div>
+          <div class="gallery-gradient"></div>
+        </div>
+              <h3><br>Soundine and JITWUB: Pages 1-4, Research</h3>
+        <div class="gallery-wrapper">
+          <div class="gallery">
+            <img src="pageb1.png" alt="Page 1" data-caption="Page 1. Brinners researches a range of animations on YouTube for initial inspiration">
+            <img src="pageb2.png" alt="Page 2" data-caption="Page 2. Brinners researches previous year's VCE Media SATs to investigate the scope of his own project.">
+            <img src="pageb3.png" alt="Page 3" data-caption="Page 3. Brinners investigates the codes and conventions of mixed media animation and the narrative implications of the technique.">
+            <img src="pageb4.png" alt="Page 4" data-caption="Page 4. Brinners continues to investigate mixed media animation, investigating certain technique artifacts and unique stylistic codes.">
+          </div>
+          <div class="gallery-gradient"></div>
+        </div>
+      
+        <h3>Pappou: Pages 1-4, Research</h3>
+        <div class="gallery-wrapper">
+          <div class="gallery">
+            <img src="z1.png" alt="Page 1" data-caption="Page 1. Georgie researches previous VCE Media SAT documentaries.">
+            <img src="z2.png" alt="Page 2" data-caption="Page 2. Georgie researches Hollywood filmmakers and their use of the moving picture to communicate social issues and symbology.">
+            <img src="z3.png" alt="Page 3" data-caption="Page 3. Georgie researches and screenshots cinematographic codes.">
+            <img src="z4.png" alt="Page 4" data-caption="Page 4. ...continued from page 3">
+          </div>
+          <div class="gallery-gradient"></div>
+        </div>
+      </section>
+      
+      <!-- Interactive Quiz Section -->
+      <section id="quiz-section">
+        <h3>Interactive Quiz</h3>
+        <p>Test your knowledge on VCE Media Folio Resource:</p>
+        <form id="quiz-form">
+          <p>Which of the following is a key aspect of VCE Media portfolio assessment?</p><br>
+          <label><input type="radio" name="question1" value="A"> Research and documentation</label><br>
+          <label><input type="radio" name="question1" value="B"> Use of templates</label><br>
+          <label><input type="radio" name="question1" value="C"> Font choice</label><br>
+          <label><input type="radio" name="question1" value="D"> Letterboxed account reviews</label><br><br>
+          <button type="submit">Submit Answer</button>
+        </form>
+        <div id="quiz-feedback" style="margin-top:10px; font-weight:bold;"></div>
+      </section>
+      
+      <!-- Video Section 2 -->
+      <section id="video-section2">
+        <h3>Video: Folio advice - Research</h3>
+        <p style="text-align: left;">Kathryn Hendy-Ekers – Curriculum Manager Visual Arts discusses the portfolios and assessment criteria for VCE Media Unit 3 Outcome 1.</p>
+        <div class="video-container">
+          <video controls>
+            <source src="https://player.vimeo.com/progressive_redirect/playback/1055825326/rendition/720p/file.mp4?loc=external&log_user=0&signature=5d6d2a153bcef0c7ba85f62557da943d563fec7c7db9a2c5b5b093988ec682ae" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+    <!-- Part one intro -->
+    <div class="content">
+      <section id="part2"><h2> Part Two: Pre-production planning</h2><p>In this section we will explore Unit 3 Area of Study 2 Research, development and experimentation.
+        <br><br><i>How are ideas, research, investigation and experimentation used in the development of media products?</i>
+        <br><br>Refer to page 28 of the VCE Media Study Design for more information</p></section>
+      </section>
+      <!-- Video Section 3 -->
+      <section id="video-section3">
+        <h3>Video: Folio advice - Pre-production planning</h3>
+        <p style="text-align: left;">Kathryn Hendy-Ekers – Curriculum Manager Visual Arts discusses documenting pre-production planning in the portfolio.</p>
+        <div class="video-container">
+          <video controls>
+            <source src="https://player.vimeo.com/progressive_redirect/playback/1055825326/rendition/720p/file.mp4?loc=external&log_user=0&signature=5d6d2a153bcef0c7ba85f62557da943d563fec7c7db9a2c5b5b093988ec682ae" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        </section>
+   <!-- Criteria 2 Section -->
+   <section id="crit2" class="crit-section">
+    <h3>Relevant assessment criteria</h3>
+    <p>
+      Ethan, Georgie and Brinners discussed the production experiments for their films and how they documented them for their portfolios. Explore the relevant assessment criteria is below.
+    </p>
+    <img src="crit1.png" alt="Sample Image">
+    <p>Below are portfolio pages documenting the production experiments. Click the pages to view the annotations</p>
+  </section>
+
+    </div>
+  </main>
+  
+  <!-- On Mobile, Resources appear below main content -->
+  <aside class="right-col">
+    <h3>Resources</h3>
+    <ul>
+      <li><a href="https://www.vcaa.vic.edu.au/Documents/vce/media/2024MediaSD.docx">VCE Media Study Design</a></li>
+      <li><a href="https://museumsvictoria.com.au/melbournemuseum/learning/top-designs-2023/media-folios/#&gid=1&pid=3">2023 Folios at Melbourne Museum</a></li>
+      <li><a href="https://www.vcaa.vic.edu.au/Documents/vce/media/2025MediaSBA.docx">VCE Media Administrative Information</a></li>
+    </ul>
+  </aside>
+  
+  <!-- Modal for Gallery Images -->
+  <div class="modal" id="modal">
+    <span class="close" id="modal-close">&times;</span>
+    <div class="nav-arrow left" id="prev-arrow">&#10094;</div>
+    <!-- Modal image; clicking toggles zoom state -->
+    <img id="modal-img" src="" alt="Full Size">
+    <div class="modal-caption" id="modal-caption"></div>
+    <div class="nav-arrow right" id="next-arrow">&#10095;</div>
+  </div>
+  
+  <script>
+    /********* Custom Smooth Scrolling Function *********/
+    function smoothScrollTo(element, duration) {
+      // On mobile, subtract an offset of 60px; on desktop subtract 80px.
+      const offset = window.innerWidth <= 768 ? 60 : 80;
+      const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - offset;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      if (duration === undefined) {
+         duration = Math.max(800, Math.min(1500, Math.abs(distance) * 0.7));
+      }
+      let startTime = null;
+      function animation(currentTime) {
+         if (startTime === null) startTime = currentTime;
+         const timeElapsed = currentTime - startTime;
+         const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+         window.scrollTo(0, run);
+         if (timeElapsed < duration) requestAnimationFrame(animation);
+      }
+      function easeInOutQuad(t, b, c, d) {
+         t /= d / 2;
+         if (t < 1) return c / 2 * t * t + b;
+         t--;
+         return -c / 2 * (t * (t - 2) - 1) + b;
+      }
+      requestAnimationFrame(animation);
+    }
+    
+    /********* Update Active Section (ScrollSpy) *********/
+    const navLinks = document.querySelectorAll('#nav-list a');
+    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+    let currentActiveIndex = 0;
+    function updateActiveSection() {
+      let activeIndex = 0;
+      sections.forEach((section, index) => {
+         const rect = section.getBoundingClientRect();
+         if (rect.top < window.innerHeight * 0.4) { activeIndex = index; }
+      });
+      currentActiveIndex = activeIndex;
+      document.querySelectorAll('#nav-list li').forEach((li, i) => {
+         li.classList.toggle('active', i === activeIndex);
+      });
+      const mobileChapter = document.getElementById('mobile-chapter');
+      if (mobileChapter) { mobileChapter.textContent = " " + navLinks[activeIndex].textContent; }
+    }
+    window.addEventListener('scroll', updateActiveSection);
+    window.addEventListener('resize', updateActiveSection);
+    updateActiveSection();
+    
+    /********* Attach click events to desktop nav links *********/
+    navLinks.forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+         e.preventDefault();
+         const targetElement = document.querySelector(this.getAttribute('href'));
+         if (targetElement) { smoothScrollTo(targetElement); }
+      });
+    });
+    
+    /********* Gallery Modal Functionality with Captions *********/
+    const galleryImages = document.querySelectorAll('.gallery img');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const modalClose = document.getElementById('modal-close');
+    const nextArrow = document.getElementById('next-arrow');
+    const prevArrow = document.getElementById('prev-arrow');
+    let currentGalleryIndex = 0;
+    function updateModalContent() {
+      const currentImage = galleryImages[currentGalleryIndex];
+      modalImg.src = currentImage.src;
+      modalCaption.textContent = currentImage.getAttribute('data-caption') || "";
+      // Always reset zoom state on new image
+      modalImg.classList.remove('zoomed');
+    }
+    galleryImages.forEach((img, index) => {
+      img.addEventListener('click', () => {
+         currentGalleryIndex = index;
+         modal.classList.add('active');
+         updateModalContent();
+      });
+    });
+    modalClose.addEventListener('click', () => { modal.classList.remove('active'); });
+    nextArrow.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+      updateModalContent();
+    });
+    prevArrow.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+      updateModalContent();
+    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); } });
+    
+    /********* Toggle Zoom on Modal Image on Click *********/
+    modalImg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Toggle zoom state: moderate zoom factor (1.5×)
+      modalImg.classList.toggle('zoomed');
+    });
+    
+  
+    /********* Mobile Navigation *********/
+    const mobilePrev = document.getElementById('mobile-prev');
+    const mobileNext = document.getElementById('mobile-next');
+    mobilePrev.addEventListener('click', () => {
+      if (currentActiveIndex > 0) {
+         const prevSection = sections[currentActiveIndex - 1];
+         smoothScrollTo(prevSection);
+      }
+    });
+    mobileNext.addEventListener('click', () => {
+      if (currentActiveIndex < sections.length - 1) {
+         const nextSection = sections[currentActiveIndex + 1];
+         smoothScrollTo(nextSection);
+      }
+    });
+    
+    /********* Interactive Quiz Section *********/
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="question1"]:checked');
+      const feedback = document.getElementById('quiz-feedback');
+      if (!selected) {
+        feedback.textContent = 'Please select an answer.';
+        feedback.style.color = 'red';
+      } else {
+        if (selected.value === 'A') {
+          feedback.textContent = 'Correct!';
+          feedback.style.color = 'green';
+        } else {
+          feedback.textContent = 'Incorrect. Try again!';
+          feedback.style.color = 'red';
+        }
+      }
+    });
+    
+  </script>
+</body>
+</html>

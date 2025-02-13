@@ -1,0 +1,108 @@
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-Light.woff2') format('woff2'),
+        url('VIC-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-Italic.woff2') format('woff2'),
+        url('VIC-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-ExtraLight.woff2') format('woff2'),
+        url('VIC-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-BoldItalic.woff2') format('woff2'),
+        url('VIC-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-SemiBoldItalic.woff2') format('woff2'),
+        url('VIC-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-LightItalic.woff2') format('woff2'),
+        url('VIC-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-MediumItalic.woff2') format('woff2'),
+        url('VIC-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-SemiBold.woff2') format('woff2'),
+        url('VIC-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-Medium.woff2') format('woff2'),
+        url('VIC-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-Bold.woff2') format('woff2'),
+        url('VIC-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-Regular.woff2') format('woff2'),
+        url('VIC-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VIC';
+    src: url('VIC-ExtraLightItalic.woff2') format('woff2'),
+        url('VIC-ExtraLightItalic.woff') format('woff');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
